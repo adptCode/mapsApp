@@ -2,8 +2,9 @@ import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 
 import mapboxgl from 'mapbox-gl';
+import { environment } from '../../../../environments/environment';
 
-mapboxgl.accessToken = 'pk.eyJ1IjoiYWRwdGNvZGUiLCJhIjoiY20yajNyM2wxMDFoaDJqc2I4dG5keXAzaCJ9.qIRLrPbj_pGnE0QzjbwkUw';
+mapboxgl.accessToken = environment.mapbox_key;
 
 @Component({
   selector: 'app-zoom-page',
@@ -23,7 +24,7 @@ export class ZoomPageComponent implements AfterViewInit {
 
     if ( !this.divMap ) throw new Error('The divMap element is not found');
 
-    const map = new mapboxgl.Map({
+    this.map = new mapboxgl.Map({
       container: this.divMap.nativeElement, // container ID
       style: 'mapbox://styles/mapbox/streets-v12', // style URL
       center: [-74.5, 40], // starting position [lng, lat]
@@ -38,6 +39,24 @@ export class ZoomPageComponent implements AfterViewInit {
     this.map.on('zoom', (ev) => {
       this.zoom = this.map!.getZoom();
     });
+
+    this.map.on('zoomend', (ev) => {
+      if ( this.map!.getZoom() < 18 ) return;
+      this.map!.zoomTo(18);
+    });
+  }
+
+  zoomIn() {
+    this.map?.zoomIn();
+  }
+
+  zoomOut() {
+    this.map?.zoomOut();
+  }
+
+  zoomChanged (value: string) {
+    this.zoom = Number(value);
+    this.map?.zoomTo(this.zoom);
   }
 }
 

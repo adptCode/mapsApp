@@ -3,16 +3,18 @@
 <div class="floating-range p-2">
   <div class="floating-content">
 
-    <button class="btn btn-primary"> - </button>
+    <button (click)="zoomOut()" class="btn btn-primary"> - </button>
 
     <input type="range"
     class="form-range px-2"
     min="-2"
     max="18"
     [value]="zoom"
+    (input)="zoomChanged(zoomInput.value)"
+    #zoomInput
     >
 
-    <button class="btn btn-primary"> + </button>
+    <button (click)="zoomIn()" class="btn btn-primary"> + </button>
   </div>
 
   <span class="form-label">

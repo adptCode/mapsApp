@@ -1,7 +1,8 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import mapboxgl from 'mapbox-gl';
+import { environment } from '../../../../environments/environment';
 
-mapboxgl.accessToken = 'pk.eyJ1IjoiYWRwdGNvZGUiLCJhIjoiY20yajNyM2wxMDFoaDJqc2I4dG5keXAzaCJ9.qIRLrPbj_pGnE0QzjbwkUw';
+mapboxgl.accessToken = environment.mapbox_key;
 
 @Component({
   selector: 'app-full-screen-page',
